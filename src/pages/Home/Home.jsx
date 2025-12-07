@@ -4,8 +4,10 @@ import Popular from './Popular/Popular';
 import Motivation from './Motivation/Motivation';
 import RecentWinner from './RecentWinner/RecentWinner';
 import HowItWork from '../../components/HowItWork/HowItWork';
+import FAQ from '../../components/FAQ/FAQ';
 
 const Home = () => {
+
     return (
         <div>
             <Banner></Banner>
@@ -13,6 +15,7 @@ const Home = () => {
             <Motivation></Motivation>
             <RecentWinner></RecentWinner>
             <HowItWork></HowItWork>
+            <FAQ></FAQ>
         </div>
     );
 };
