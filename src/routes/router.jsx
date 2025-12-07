@@ -3,6 +3,7 @@ import Root from "../layout/Root";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
+import NotFound from "../pages/NotFound/NotFound";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
     {
         path: '/register',
         Component: Register
+    },
+    {
+        path: '*',
+        Component: NotFound
     }
 ]);
 
