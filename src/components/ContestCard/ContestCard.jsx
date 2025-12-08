@@ -22,7 +22,7 @@ const ContestCard = () => {
                     </div>
                 </div>
                 <p className='text-sm pb-2'>Join the movement to fight climate change and raise awareness about the impacts of global warming. This contest challenges you to explore...</p>
-                <Link className='btn w-full btn-primary mt-1' to={'/'}>Details</Link>
+                <Link className='btn w-full btn-primary mt-1' to={'/details/id'}>Details</Link>
             </div>
         </div>
     );

@@ -5,6 +5,7 @@ import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import NotFound from "../pages/NotFound/NotFound";
 import AllContest from "../pages/AllContest/AllContest";
+import Details from "../pages/Details/Details";
 
 const router = createBrowserRouter([
     {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
             {
                 path: 'all-contests',
                 Component: AllContest
+            },
+            {
+                path: 'details/:id',
+                element: <Details></Details>
             }
         ]
     },
