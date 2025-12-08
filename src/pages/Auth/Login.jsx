@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import SocialLogin from '../../components/SocialLogin/SocialLogin';
 import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import useAuth from '../../hooks/useAuth';
+import toast from 'react-hot-toast';
 
 const Login = () => {
     const [showPass, setShowPass] = useState(true);
     const {register, handleSubmit, formState: {errors}} = useForm();
+    const {loginUser} = useAuth();
+    const navigate = useNavigate();
 
     const handleLogin = (data) => {
-        console.log(data);
+        loginUser(data.email, data.password)
+        .then(() => {
+            toast.success("Login successful");
+            navigate('/');
+        })
+        .catch(err=> {
+            toast.error(err.message);
+        })
     } 
 
     return (

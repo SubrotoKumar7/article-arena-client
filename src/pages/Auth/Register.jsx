@@ -28,7 +28,6 @@ const Register = () => {
 
             updateUser(userInfo)
             .then(()=> {
-                console.log("inside the update user");
                 toast.success("Account created successfully");
                 setLoading(false);
                 navigate('/');
