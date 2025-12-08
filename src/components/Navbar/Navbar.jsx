@@ -7,7 +7,6 @@ const Navbar = () => {
     const [isScroll, setIsScroll] = useState(false);
     const location = useLocation();
 
-
     useEffect(()=> {
         window.addEventListener('scroll', ()=> {
             const scroll = window.scrollY;
