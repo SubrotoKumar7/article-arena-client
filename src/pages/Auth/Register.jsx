@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import SocialLogin from '../../components/SocialLogin/SocialLogin';
+import useAuth from '../../hooks/useAuth';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import toast from 'react-hot-toast';
 
 const Register = () => {
+    const [showPass, setShowPass] = useState(true);
     const {register, handleSubmit, formState: {errors}} = useForm();
+    const {createUser, setLoading} = useAuth();
+    const navigate = useNavigate();
 
     const handleRegister = (data) => {
-        console.log(data);
+        createUser(data.email, data.password)
+        .then(() => {
+            toast.success("Account created successfully");
+            setLoading(false);
+            navigate('/');
+        })
+        .catch(err => {
+            toast.error(err.message);
+        })
     }
 
     return (
@@ -34,7 +48,11 @@ const Register = () => {
 
                         {/* password */}
                         <label className="label">Password</label>
-                        <input type="password" {...register("password", {required: {value: true, message: "Password is required"}, pattern: {value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$/, message: "Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 special character and length at least 6 characters"}})} className="input w-full" placeholder="Password" />
+                        <div className='relative'>
+                            <input type={showPass ? "password" : "text"} {...register("password", {required: {value: true, message: "Password is required"}, pattern: {value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$/, message: "Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 special character and length at least 6 characters"}})} className="input w-full" placeholder="Password" />
+
+                            <div className='absolute right-3 top-1/3'>{showPass ? <button type='button' className='hover:cursor-pointer' onClick={()=> setShowPass(false)}><FaEyeSlash /></button> : <button type='button' className='hover:cursor-pointer' onClick={()=> setShowPass(true)}><FaEye /></button>}</div>
+                        </div>
                         {errors?.password && <p className='text-red-500'>{errors?.password.message}</p>}
 
 
