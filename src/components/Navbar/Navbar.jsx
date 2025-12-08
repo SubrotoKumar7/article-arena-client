@@ -26,13 +26,13 @@ const Navbar = () => {
     </>
 
     return (
-        <div className={`${location.pathname === '/' ? 'fixed top-0 left-0 w-full z-50 md:text-white' : 'static text-black'} py-2  ${isScroll ? 'bg-base-100 text-black!' : 'bg-transparent'}`}>
+        <div className={`${location.pathname === '/' ? 'fixed top-0 left-0 w-full z-50 md:text-white' : 'static text-black'} py-2  ${isScroll ? 'bg-base-100 text-black!' : 'bg-transparent shadow-sm'}`}>
             <Container>
                 <div className="navbar my-1">
                     <div className="navbar-start">
                         <div className="dropdown">
                             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-                                <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${isScroll ? 'text-black' : 'text-white'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${!(location.pathname === '/') && 'text-black' || isScroll ? 'text-black' : 'text-white'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
                             </div>
                             <ul
                                 tabIndex="-1"
@@ -40,7 +40,7 @@ const Navbar = () => {
                                 {links}
                             </ul>
                         </div>
-                        <div className={`${isScroll ? "text-black" : "text-white"}`}>
+                        <div className={`${!(location.pathname === '/') && 'text-black' || isScroll ? "text-black" : "text-white"}`}>
                             <Logo></Logo>
                         </div>
                     </div>

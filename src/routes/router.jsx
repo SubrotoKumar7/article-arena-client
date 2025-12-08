@@ -4,6 +4,7 @@ import Home from "../pages/Home/Home";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import NotFound from "../pages/NotFound/NotFound";
+import AllContest from "../pages/AllContest/AllContest";
 
 const router = createBrowserRouter([
     {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
             {
                 index: true,
                 Component: Home
+            },
+            {
+                path: 'all-contests',
+                Component: AllContest
             }
         ]
     },
