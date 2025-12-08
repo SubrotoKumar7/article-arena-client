@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router';
 import Logo from '../Shared/Logo/Logo';
 import Container from '../Shared/Container/Container';
+import useAuth from '../../hooks/useAuth';
 
 const Navbar = () => {
+    const {user} = useAuth();
     const [isScroll, setIsScroll] = useState(false);
     const location = useLocation();
+
 
     useEffect(()=> {
         window.addEventListener('scroll', ()=> {
@@ -53,21 +56,16 @@ const Navbar = () => {
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
                                 <img
-                                    alt="Tailwind CSS Navbar component"
-                                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                                    referrerPolicy='no-referrer'
+                                    src={user?.photoURL} alt='user image' />
                                 </div>
                             </div>
                             <ul
                                 tabIndex="-1"
                                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                                <li>
-                                <a className="justify-between">
-                                    Profile
-                                    <span className="badge">New</span>
-                                </a>
-                                </li>
-                                <li><a>Settings</a></li>
-                                <li><a>Logout</a></li>
+                                <li className='text-center font-semibold'>{user?.displayName}</li>
+                                <li className='text-center'>{user?.email}</li>
+                                <li className='my-2'><button className='btn btn-primary btn-sm'>Logout</button></li>
                             </ul>
                         </div>
                         <Link className='btn-primary btn' to={'/login'}>Login</Link>

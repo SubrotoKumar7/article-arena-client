@@ -5,19 +5,37 @@ import SocialLogin from '../../components/SocialLogin/SocialLogin';
 import useAuth from '../../hooks/useAuth';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import toast from 'react-hot-toast';
+import uploadImage from '../../utils/uploadImage';
 
 const Register = () => {
     const [showPass, setShowPass] = useState(true);
     const {register, handleSubmit, formState: {errors}} = useForm();
-    const {createUser, setLoading} = useAuth();
+    const {createUser, updateUser, setLoading} = useAuth();
     const navigate = useNavigate();
 
-    const handleRegister = (data) => {
+    const handleRegister = async(data) => {
+        const image = data.image[0];
+                
         createUser(data.email, data.password)
-        .then(() => {
-            toast.success("Account created successfully");
-            setLoading(false);
-            navigate('/');
+        .then( async() => {
+            const uploadRes = await uploadImage(image);
+            const url = uploadRes.data.url;
+            
+            const userInfo = {
+                displayName: data.name,
+                photoURL: url
+            }
+
+            updateUser(userInfo)
+            .then(()=> {
+                console.log("inside the update user");
+                toast.success("Account created successfully");
+                setLoading(false);
+                navigate('/');
+            })
+            .catch(err => {
+            toast.error(err.message);
+        })
         })
         .catch(err => {
             toast.error(err.message);
