@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router';
 import SocialLogin from '../../components/SocialLogin/SocialLogin';
 import { useForm } from 'react-hook-form';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Login = () => {
+    const [showPass, setShowPass] = useState(true);
     const {register, handleSubmit, formState: {errors}} = useForm();
 
     const handleLogin = (data) => {
@@ -24,7 +26,11 @@ const Login = () => {
 
                         {/* password */}
                         <label className="label">Password</label>
-                        <input type="password" {...register("password", {required: {value: true, message: "Password is required"}})} className="input w-full" placeholder="Password" />
+                        <div className='relative'>
+                            <input type={showPass ? "password" : "text"} {...register("password", {required: {value: true, message: "Password is required"}, pattern: {value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$/, message: "Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 special character and length at least 6 characters"}})} className="input w-full" placeholder="Password" />
+
+                            <div className='absolute z-10 right-3 top-1/3'>{showPass ? <button type='button' className='hover:cursor-pointer' onClick={()=> setShowPass(false)}><FaEyeSlash /></button> : <button type='button' className='hover:cursor-pointer' onClick={()=> setShowPass(true)}><FaEye /></button>}</div>
+                        </div>
                         {errors?.password && <p className='text-red-500'>{errors?.password.message}</p>}
 
                         <div><a className="link link-hover">Forgot password?</a></div>
