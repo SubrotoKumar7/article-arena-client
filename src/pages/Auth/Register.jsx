@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from '../../components/SocialLogin/SocialLogin';
 import useAuth from '../../hooks/useAuth';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -12,6 +12,7 @@ const Register = () => {
     const {register, handleSubmit, formState: {errors}} = useForm();
     const {createUser, updateUser, setLoading} = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleRegister = async(data) => {
         const image = data.image[0];
@@ -30,7 +31,7 @@ const Register = () => {
             .then(()=> {
                 toast.success("Account created successfully");
                 setLoading(false);
-                navigate('/');
+                navigate(location.state || '/');
             })
             .catch(err => {
             toast.error(err.message);
@@ -76,7 +77,7 @@ const Register = () => {
                         <button className="btn btn-neutral mt-2">Register</button>
                     </fieldset>
                 </form>
-                <p className='my-3 font-medium text-center'>Already have an account? <Link className='text-primary font-semibold' to='/login'>Login</Link></p>
+                <p className='my-3 font-medium text-center'>Already have an account? <Link state={location.state} className='text-primary font-semibold' to='/login'>Login</Link></p>
                 <p className='text-center font-medium text-sm'>Or With</p>
                 <div className='flex justify-center my-2'></div>
                 <div className=''>

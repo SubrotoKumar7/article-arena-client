@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from '../../components/SocialLogin/SocialLogin';
 import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -11,12 +11,13 @@ const Login = () => {
     const {register, handleSubmit, formState: {errors}} = useForm();
     const {loginUser} = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleLogin = (data) => {
         loginUser(data.email, data.password)
         .then(() => {
             toast.success("Login successful");
-            navigate('/');
+            navigate(location.state || '/');
         })
         .catch(err=> {
             toast.error(err.message);
@@ -49,7 +50,7 @@ const Login = () => {
                         <button className="btn btn-neutral mt-2">Login</button>
                     </fieldset>
                 </form>
-                <p className='my-3 font-medium text-center'>Don't have an account? <Link className='text-primary font-semibold' to='/register'>Register</Link></p>
+                <p className='my-3 font-medium text-center'>Don't have an account? <Link state={location.state} className='text-primary font-semibold' to='/register'>Register</Link></p>
                 <p className='text-center font-medium text-sm'>Or With</p>
                 <div className='flex justify-center my-2'></div>
                 <div className=''>
