@@ -6,6 +6,7 @@ import Register from "../pages/Auth/Register";
 import NotFound from "../pages/NotFound/NotFound";
 import AllContest from "../pages/AllContest/AllContest";
 import Details from "../pages/Details/Details";
+import Loader from "../components/Loader/Loader";
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
     {
         path: '*',
         Component: NotFound
+    },
+    {
+        path: '/loader',
+        Component: Loader
     }
 ]);
 
