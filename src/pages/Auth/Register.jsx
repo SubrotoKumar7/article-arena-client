@@ -6,6 +6,7 @@ import useAuth from '../../hooks/useAuth';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import uploadImage from '../../utils/uploadImage';
+import useAxiosSecured from '../../hooks/useAxiosSecured';
 
 const Register = () => {
     const [showPass, setShowPass] = useState(true);
@@ -13,6 +14,7 @@ const Register = () => {
     const {createUser, updateUser, setLoading} = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
+    const axiosSecure = useAxiosSecured();
 
     const handleRegister = async(data) => {
         const image = data.image[0];
@@ -24,14 +26,23 @@ const Register = () => {
             
             const userInfo = {
                 displayName: data.name,
-                photoURL: url
+                email: data.email,
+                photoURL: url,
+                password: data.password
             }
 
-            updateUser(userInfo)
+            updateUser({displayName: userInfo.displayName, photoURL:url})
             .then(()=> {
-                toast.success("Account created successfully");
-                setLoading(false);
-                navigate(location.state || '/');
+                // save user info in db
+                axiosSecure.post('/users', userInfo)
+                .then(()=> {
+                    toast.success("Account created successfully");
+                    setLoading(false);
+                    navigate(location.state || '/');
+                })
+                .catch(err=> {
+                    toast.error(err.message);
+                })
             })
             .catch(err => {
             toast.error(err.message);
