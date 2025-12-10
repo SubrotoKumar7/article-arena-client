@@ -9,9 +9,13 @@ import Details from "../pages/Details/Details";
 import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../layout/DashboardLayout";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
-import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
-import ApproveContest from "../pages/Dashboard/ApproveContest/ApproveContest";
-import SpecialUsers from "../pages/Dashboard/SpecialUsers/SpecialUsers";
+import AllUsers from "../pages/Dashboard/Admin/AllUsers/AllUsers";
+import ApproveContest from "../pages/Dashboard/Admin/ApproveContest/ApproveContest";
+import SpecialUsers from "../pages/Dashboard/Admin/SpecialUsers/SpecialUsers";
+import AddContest from "../pages/Dashboard/Creator/AddContest/AddContest";
+import EditContest from "../pages/Dashboard/Creator/EditContest/EditContest";
+import DeclareWinner from "../pages/Dashboard/Creator/DeclareWinner/DeclareWinner";
+
 
 const router = createBrowserRouter([
     {
@@ -52,6 +56,7 @@ const router = createBrowserRouter([
                 index: true,
                 Component: DashboardHome
             },
+            // admin only routes
             {
                 path: 'all-users',
                 Component: AllUsers
@@ -63,6 +68,19 @@ const router = createBrowserRouter([
             {
                 path: 'special-users',
                 Component: SpecialUsers
+            },
+            // creator only routes
+            {
+                path: 'add-contest',
+                Component: AddContest
+            },
+            {
+                path: 'edit-contest',
+                Component: EditContest
+            },
+            {
+                path: 'declare-winner',
+                Component: DeclareWinner
             }
         ]
     }
