@@ -6,10 +6,13 @@ import { IoHome, IoSettingsSharp } from 'react-icons/io5';
 import { RiArticleFill, RiFileEditFill, RiSidebarFoldFill } from "react-icons/ri";
 import { MdNoteAlt } from 'react-icons/md';
 import { GiPodiumWinner } from "react-icons/gi";
+import useRole from '../hooks/useRole';
 
 
 
 const DashboardLayout = () => {
+    const {role: {role}} = useRole();
+
     return (
         <div>
             <div className="drawer lg:drawer-open">
@@ -45,53 +48,59 @@ const DashboardLayout = () => {
                             </li>
 
                             {/* admin only routes */}
-                            <>
-                                <li>
-                                    <NavLink to={'/dashboard/all-users'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All Users">
-                                        <FaUserFriends className="my-1.5 inline-block size-4" />
-                                        <span className="is-drawer-close:hidden">All Users</span>
-                                    </NavLink>
-                                </li>
+                            {
+                                role === 'admin' &&
+                                <>
+                                    <li>
+                                        <NavLink to={'/dashboard/all-users'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All Users">
+                                            <FaUserFriends className="my-1.5 inline-block size-4" />
+                                            <span className="is-drawer-close:hidden">All Users</span>
+                                        </NavLink>
+                                    </li>
 
-                                <li>
-                                    <NavLink to={'/dashboard/approve-contest'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Approve Contest">
-                                        <RiArticleFill className="my-1.5 inline-block size-4" />
-                                        <span className="is-drawer-close:hidden">Approve Contest</span>
-                                    </NavLink>
-                                </li>
+                                    <li>
+                                        <NavLink to={'/dashboard/approve-contest'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Approve Contest">
+                                            <RiArticleFill className="my-1.5 inline-block size-4" />
+                                            <span className="is-drawer-close:hidden">Approve Contest</span>
+                                        </NavLink>
+                                    </li>
 
-                                <li>
-                                    <NavLink to={'/dashboard/special-users'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Special Users">
-                                        <FaUserCog className="my-1.5 inline-block size-4" />
-                                        <span className="is-drawer-close:hidden">Special Users</span>
-                                    </NavLink>
-                                </li>
-                            </>
+                                    <li>
+                                        <NavLink to={'/dashboard/special-users'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Special Users">
+                                            <FaUserCog className="my-1.5 inline-block size-4" />
+                                            <span className="is-drawer-close:hidden">Special Users</span>
+                                        </NavLink>
+                                    </li>
+                                </>
+                            }
 
 
                             {/* contest creator only routes */}
-                            <>
-                                <li>
-                                    <NavLink to={'/dashboard/add-contest'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add Contest">
-                                        <MdNoteAlt className="my-1.5 inline-block size-4" />
-                                        <span className="is-drawer-close:hidden">Add Contest</span>
-                                    </NavLink>
-                                </li>
+                            {    
+                                role === 'creator' &&
+                                <>
+                                    <li>
+                                        <NavLink to={'/dashboard/add-contest'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add Contest">
+                                            <MdNoteAlt className="my-1.5 inline-block size-4" />
+                                            <span className="is-drawer-close:hidden">Add Contest</span>
+                                        </NavLink>
+                                    </li>
 
-                                <li>
-                                    <NavLink to={'/dashboard/edit-contest'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Edit Contest">
-                                        <RiFileEditFill className="my-1.5 inline-block size-4" />
-                                        <span className="is-drawer-close:hidden">Edit Contest</span>
-                                    </NavLink>
-                                </li>
+                                    <li>
+                                        <NavLink to={'/dashboard/edit-contest'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Edit Contest">
+                                            <RiFileEditFill className="my-1.5 inline-block size-4" />
+                                            <span className="is-drawer-close:hidden">Edit Contest</span>
+                                        </NavLink>
+                                    </li>
 
-                                <li>
-                                    <NavLink to={'/dashboard/declare-winner'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Declare Winner">
-                                        <GiPodiumWinner className="my-1.5 inline-block size-4" />
-                                        <span className="is-drawer-close:hidden">Declare Winner</span>
-                                    </NavLink>
-                                </li>
-                            </>
+                                    <li>
+                                        <NavLink to={'/dashboard/declare-winner'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Declare Winner">
+                                            <GiPodiumWinner className="my-1.5 inline-block size-4" />
+                                            <span className="is-drawer-close:hidden">Declare Winner</span>
+                                        </NavLink>
+                                    </li>
+                                </>
+                            }
                             
 
                             <li>
