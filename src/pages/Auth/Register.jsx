@@ -28,7 +28,7 @@ const Register = () => {
                 displayName: data.name,
                 email: data.email,
                 photoURL: url,
-                password: data.password
+                signupMethod: "custom"
             }
 
             updateUser({displayName: userInfo.displayName, photoURL:url})
