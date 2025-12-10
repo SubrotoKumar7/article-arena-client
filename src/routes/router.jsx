@@ -6,9 +6,12 @@ import Register from "../pages/Auth/Register";
 import NotFound from "../pages/NotFound/NotFound";
 import AllContest from "../pages/AllContest/AllContest";
 import Details from "../pages/Details/Details";
-import Loader from "../components/Loader/Loader";
 import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../layout/DashboardLayout";
+import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
+import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
+import ApproveContest from "../pages/Dashboard/ApproveContest/ApproveContest";
+import SpecialUsers from "../pages/Dashboard/SpecialUsers/SpecialUsers";
 
 const router = createBrowserRouter([
     {
@@ -42,8 +45,26 @@ const router = createBrowserRouter([
         Component: NotFound
     },
     {
-        path: '/dashboard',
-        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>
+        path: 'dashboard',
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        children: [
+            {
+                index: true,
+                Component: DashboardHome
+            },
+            {
+                path: 'all-users',
+                Component: AllUsers
+            },
+            {
+                path: 'approve-contest',
+                Component: ApproveContest
+            },
+            {
+                path: 'special-users',
+                Component: SpecialUsers
+            }
+        ]
     }
 ]);
 
