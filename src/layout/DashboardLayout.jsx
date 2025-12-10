@@ -2,10 +2,11 @@ import React from 'react';
 import Logo from '../components/Shared/Logo/Logo';
 import { NavLink, Outlet } from 'react-router';
 import { FaUserCog, FaUserFriends } from 'react-icons/fa';
-import { IoHome, IoSettingsSharp } from 'react-icons/io5';
+import { IoHome, IoSettingsSharp, IoTrophySharp } from 'react-icons/io5';
 import { RiArticleFill, RiFileEditFill, RiSidebarFoldFill } from "react-icons/ri";
 import { MdNoteAlt } from 'react-icons/md';
 import { GiPodiumWinner } from "react-icons/gi";
+import { BiSolidCalendarEvent } from "react-icons/bi";
 import useRole from '../hooks/useRole';
 
 
@@ -99,6 +100,26 @@ const DashboardLayout = () => {
                                             <span className="is-drawer-close:hidden">Declare Winner</span>
                                         </NavLink>
                                     </li>
+                                </>
+                            }
+
+                            {/* user only routes */}
+                            {
+                                role === 'user' &&
+                                <>
+                                    <li>
+                                        <NavLink to={'/dashboard/joined-contest'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Joined Contest">
+                                            <BiSolidCalendarEvent className="my-1.5 inline-block size-4" />
+                                            <span className="is-drawer-close:hidden">Joined Contest</span>
+                                        </NavLink>
+                                    </li>  
+
+                                    <li>
+                                        <NavLink to={'/dashboard/winning-contest'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Winning Contest">
+                                            <IoTrophySharp className="my-1.5 inline-block size-4" />
+                                            <span className="is-drawer-close:hidden">Winning Contest</span>
+                                        </NavLink>
+                                    </li>  
                                 </>
                             }
                             

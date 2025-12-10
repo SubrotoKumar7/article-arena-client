@@ -15,6 +15,11 @@ import SpecialUsers from "../pages/Dashboard/Admin/SpecialUsers/SpecialUsers";
 import AddContest from "../pages/Dashboard/Creator/AddContest/AddContest";
 import EditContest from "../pages/Dashboard/Creator/EditContest/EditContest";
 import DeclareWinner from "../pages/Dashboard/Creator/DeclareWinner/DeclareWinner";
+import AdminRoute from "./AdminRoute";
+import CreatorRoute from "./CreatorRoute";
+import UserRoute from "./UserRoute";
+import JoinedContest from "../pages/Dashboard/User/JoinedContest/JoinedContest";
+import WinningContest from "../pages/Dashboard/User/WinningContest/WinningContest";
 
 
 const router = createBrowserRouter([
@@ -59,28 +64,37 @@ const router = createBrowserRouter([
             // admin only routes
             {
                 path: 'all-users',
-                Component: AllUsers
+                element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
             },
             {
                 path: 'approve-contest',
-                Component: ApproveContest
+                element: <AdminRoute><ApproveContest></ApproveContest></AdminRoute>
             },
             {
                 path: 'special-users',
-                Component: SpecialUsers
+                element: <AdminRoute><SpecialUsers></SpecialUsers></AdminRoute>
             },
             // creator only routes
             {
                 path: 'add-contest',
-                Component: AddContest
+                element: <CreatorRoute><AddContest></AddContest></CreatorRoute>
             },
             {
                 path: 'edit-contest',
-                Component: EditContest
+                element: <CreatorRoute><AddContest></AddContest></CreatorRoute>
             },
             {
                 path: 'declare-winner',
-                Component: DeclareWinner
+                element: <CreatorRoute><DeclareWinner></DeclareWinner></CreatorRoute>
+            },
+            // user only routes
+            {
+                path: 'joined-contest',
+                element: <UserRoute><JoinedContest></JoinedContest></UserRoute>
+            },
+            {
+                path: 'winning-contest',
+                element: <UserRoute><WinningContest></WinningContest></UserRoute>
             }
         ]
     }
