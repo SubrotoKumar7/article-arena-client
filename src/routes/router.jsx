@@ -11,7 +11,6 @@ import DashboardLayout from "../layout/DashboardLayout";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers/AllUsers";
 import ApproveContest from "../pages/Dashboard/Admin/ApproveContest/ApproveContest";
-import SpecialUsers from "../pages/Dashboard/Admin/SpecialUsers/SpecialUsers";
 import AddContest from "../pages/Dashboard/Creator/AddContest/AddContest";
 import EditContest from "../pages/Dashboard/Creator/EditContest/EditContest";
 import DeclareWinner from "../pages/Dashboard/Creator/DeclareWinner/DeclareWinner";
@@ -69,10 +68,6 @@ const router = createBrowserRouter([
             {
                 path: 'approve-contest',
                 element: <AdminRoute><ApproveContest></ApproveContest></AdminRoute>
-            },
-            {
-                path: 'special-users',
-                element: <AdminRoute><SpecialUsers></SpecialUsers></AdminRoute>
             },
             // creator only routes
             {

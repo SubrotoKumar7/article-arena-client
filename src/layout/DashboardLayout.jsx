@@ -65,13 +65,6 @@ const DashboardLayout = () => {
                                             <span className="is-drawer-close:hidden">Approve Contest</span>
                                         </NavLink>
                                     </li>
-
-                                    <li>
-                                        <NavLink to={'/dashboard/special-users'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Special Users">
-                                            <FaUserCog className="my-1.5 inline-block size-4" />
-                                            <span className="is-drawer-close:hidden">Special Users</span>
-                                        </NavLink>
-                                    </li>
                                 </>
                             }
 
