@@ -5,7 +5,7 @@ import { Navigate } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import toast from 'react-hot-toast';
 
-const CreatorRoute = () => {
+const CreatorRoute = ({children}) => {
     const {role: {role}, roleLoading} = useRole();
     const {logoutUser} = useAuth();
 
@@ -21,11 +21,7 @@ const CreatorRoute = () => {
         return <Navigate to={'/login'}></Navigate>
     }
 
-    return (
-        <div>
-            
-        </div>
-    );
+    return children;
 };
 
 export default CreatorRoute;

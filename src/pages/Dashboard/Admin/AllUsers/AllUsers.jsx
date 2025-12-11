@@ -2,9 +2,9 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import useAxiosSecured from '../../../../hooks/useAxiosSecured';
 import Container from '../../../../components/Shared/Container/Container';
-import Heading from '../../../../components/Shared/Heading/Heading';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
+import DashboardHeading from '../../../../components/Shared/DashboardHeading/DashboardHeading';
 
 const AllUsers = () => {
     const axiosSecure = useAxiosSecured();
@@ -56,7 +56,7 @@ const AllUsers = () => {
     return (
         <div>
             <Container>
-                <Heading customClass={'text-xl font-semibold'} title={'All Users'}></Heading>
+                <DashboardHeading title={'All Users'} position={'text-left'}></DashboardHeading>
                 <div>
                     <div className="overflow-x-auto">
                         <table className="table">
