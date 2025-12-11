@@ -1,9 +1,12 @@
 import React from 'react';
 import { GoArrowLeft } from 'react-icons/go';
+import { IoMdHome } from 'react-icons/io';
 import { IoWarningOutline } from 'react-icons/io5';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 const NotFound = () => {
+    const navigate = useNavigate();
+
     return (
         <div className='flex items-center justify-center h-screen'>
             <div className='text-center'>
@@ -12,7 +15,8 @@ const NotFound = () => {
                 </div>
                 <h1 className='font-extrabold text-3xl'>404 - Not Found</h1>
                 <p className='mb-5 mt-2'>It seems like the page you are trying to visit doesn't exits.</p>
-                <Link className='btn btn-primary' to={'/'}><GoArrowLeft /> Home</Link>
+                <Link className='btn btn-primary' to={'/'}><IoMdHome /> Home</Link>
+                <button className='btn btn-secondary ml-2' onClick={()=> navigate(-1)}><GoArrowLeft /> Back</button>
             </div>
         </div>
     );
