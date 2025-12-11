@@ -11,7 +11,6 @@ import DashboardLayout from "../layout/DashboardLayout";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers/AllUsers";
 import ApproveContest from "../pages/Dashboard/Admin/ApproveContest/ApproveContest";
-import AddContest from "../pages/Dashboard/Creator/AddContest/AddContest";
 import EditContest from "../pages/Dashboard/Creator/EditContest/EditContest";
 import DeclareWinner from "../pages/Dashboard/Creator/DeclareWinner/DeclareWinner";
 import AdminRoute from "./AdminRoute";
@@ -19,6 +18,7 @@ import CreatorRoute from "./CreatorRoute";
 import UserRoute from "./UserRoute";
 import JoinedContest from "../pages/Dashboard/User/JoinedContest/JoinedContest";
 import WinningContest from "../pages/Dashboard/User/WinningContest/WinningContest";
+import AddContest from "../pages/Dashboard/Creator/AddContest/AddContest";
 
 
 const router = createBrowserRouter([
@@ -76,7 +76,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'edit-contest',
-                element: <CreatorRoute><AddContest></AddContest></CreatorRoute>
+                element: <CreatorRoute><EditContest></EditContest></CreatorRoute>
             },
             {
                 path: 'declare-winner',
