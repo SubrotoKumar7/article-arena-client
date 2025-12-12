@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../components/Shared/Logo/Logo';
 import { NavLink, Outlet } from 'react-router';
-import { FaUserCog, FaUserFriends } from 'react-icons/fa';
+import { FaBook, FaUserCog, FaUserFriends } from 'react-icons/fa';
 import { IoHome, IoSettingsSharp, IoTrophySharp } from 'react-icons/io5';
 import { RiArticleFill, RiFileEditFill, RiSidebarFoldFill } from "react-icons/ri";
 import { MdNoteAlt } from 'react-icons/md';
@@ -75,15 +75,15 @@ const DashboardLayout = () => {
                                 <>
                                     <li>
                                         <NavLink to={'/dashboard/add-contest'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add Contest">
-                                            <MdNoteAlt className="my-1.5 inline-block size-4" />
+                                            <RiFileEditFill className="my-1.5 inline-block size-4" />
                                             <span className="is-drawer-close:hidden">Add Contest</span>
                                         </NavLink>
                                     </li>
 
                                     <li>
-                                        <NavLink to={'/dashboard/edit-contest'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Edit Contest">
-                                            <RiFileEditFill className="my-1.5 inline-block size-4" />
-                                            <span className="is-drawer-close:hidden">Edit Contest</span>
+                                        <NavLink to={'/dashboard/my-contest'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Contest">
+                                            <FaBook className="my-1.5 inline-block size-4" />
+                                            <span className="is-drawer-close:hidden">My Contest</span>
                                         </NavLink>
                                     </li>
 

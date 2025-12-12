@@ -19,6 +19,7 @@ import UserRoute from "./UserRoute";
 import JoinedContest from "../pages/Dashboard/User/JoinedContest/JoinedContest";
 import WinningContest from "../pages/Dashboard/User/WinningContest/WinningContest";
 import AddContest from "../pages/Dashboard/Creator/AddContest/AddContest";
+import MyContest from "../pages/Dashboard/Creator/MyContest/MyContest";
 
 
 const router = createBrowserRouter([
@@ -75,12 +76,16 @@ const router = createBrowserRouter([
                 element: <CreatorRoute><AddContest></AddContest></CreatorRoute>
             },
             {
-                path: 'edit-contest',
+                path: 'edit-contest/:id',
                 element: <CreatorRoute><EditContest></EditContest></CreatorRoute>
             },
             {
                 path: 'declare-winner',
                 element: <CreatorRoute><DeclareWinner></DeclareWinner></CreatorRoute>
+            },
+            {
+                path: 'my-contest',
+                element: <CreatorRoute><MyContest></MyContest></CreatorRoute>
             },
             // user only routes
             {

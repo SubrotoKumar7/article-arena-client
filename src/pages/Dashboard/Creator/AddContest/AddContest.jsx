@@ -6,11 +6,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import useAxiosSecured from '../../../../hooks/useAxiosSecured';
 import uploadImage from '../../../../utils/uploadImage';
 import toast from 'react-hot-toast';
+import useAuth from '../../../../hooks/useAuth';
 
 const AddContest = () => {
     const {register, handleSubmit, formState: {errors}, reset} = useForm();
     const [deadline, setDeadline] = useState(new Date());
     const axiosSecure = useAxiosSecured();
+    const {user} = useAuth();
     
 
     const handleAddContest = async(data) => {
@@ -29,9 +31,12 @@ const AddContest = () => {
             taskInstruction, 
             category,
             deadline,
-            participant: 0
+            participant: 0,
+            creatorName: user?.displayName,
+            creatorEmail: user?.email,
+            creatorPhoto: user?.photoURL
         }
-        
+
         axiosSecure.post('/contest', contestInfo)
         .then(res=> {
             if(res.data.insertedId){
