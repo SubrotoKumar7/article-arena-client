@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import {useParams} from 'react-router'
 import useAxiosSecured from '../../../../hooks/useAxiosSecured';
 import { useForm } from 'react-hook-form';
-import useAuth from '../../../../hooks/useAuth';
 import toast from 'react-hot-toast';
 import DatePicker from 'react-datepicker';
 import Loader from '../../../../components/Loader/Loader';
@@ -13,7 +12,6 @@ const EditContest = () => {
     const [deadline, setDeadline] = useState(new Date());
     const {id} = useParams();
     const axiosSecure = useAxiosSecured();
-    const {user} = useAuth();
 
     const {data: contest = [], isLoading, refetch} = useQuery({
         queryKey: ['contest', id],
