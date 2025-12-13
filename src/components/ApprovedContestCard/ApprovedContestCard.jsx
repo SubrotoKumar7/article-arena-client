@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const ApprovedContestCard = () => {
     return (
@@ -16,7 +17,7 @@ const ApprovedContestCard = () => {
                     </div>
                 </div>
                 <div>
-                    <button className='btn btn-primary'>view participant</button>
+                    <Link to={'/dashboard/all-participant/35'} className='btn btn-primary'>view participant</Link>
                 </div>
             </div>
         </div>
