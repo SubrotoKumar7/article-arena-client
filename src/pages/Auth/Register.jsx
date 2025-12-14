@@ -85,7 +85,7 @@ const Register = () => {
                         {errors?.password && <p className='text-red-500'>{errors?.password.message}</p>}
 
 
-                        <button className="btn btn-neutral mt-2">Register</button>
+                        <button className="btn btn-primary mt-2">Register</button>
                     </fieldset>
                 </form>
                 <p className='my-3 font-medium text-center'>Already have an account? <Link state={location.state} className='text-primary font-semibold' to='/login'>Login</Link></p>

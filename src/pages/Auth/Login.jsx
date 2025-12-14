@@ -47,7 +47,7 @@ const Login = () => {
 
                         <div><a className="link link-hover">Forgot password?</a></div>
 
-                        <button className="btn btn-neutral mt-2">Login</button>
+                        <button className="btn btn-primary mt-2">Login</button>
                     </fieldset>
                 </form>
                 <p className='my-3 font-medium text-center'>Don't have an account? <Link state={location.state} className='text-primary font-semibold' to='/register'>Register</Link></p>
