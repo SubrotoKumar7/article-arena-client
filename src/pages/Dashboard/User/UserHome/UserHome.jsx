@@ -1,11 +1,9 @@
 import React from 'react';
 import useAuth from '../../../../hooks/useAuth';
-import useRole from '../../../../hooks/useRole';
 import { Link } from 'react-router';
 
 const UserHome = () => {
     const {user} = useAuth();
-    const {role: {role}} = useRole();
 
     return (
         <div className='mb-20'>
@@ -74,7 +72,7 @@ const UserHome = () => {
                             <img className='w-15 h-15' src={user?.photoURL} alt="user images" />
                             <div>
                                 <h1 className='font-semibold text-lg'>{user?.displayName}</h1>
-                                <p className='capitalize text-xs badge badge-xs badge-secondary'>{role}</p>
+                                <p className='capitalize text-xs badge badge-xs badge-secondary'>User</p>
                             </div>
                         </div>
                         <div className='mb-3'>

@@ -31,7 +31,7 @@ const CreatorHome = () => {
                 </div>
 
                 <div className='shadow-2xl border border-gray-200 px-5 py-10 rounded-xl'>
-                    <h1 className='font-semibold mb-4'>Pending Approval</h1>
+                    <h1 className='font-semibold mb-4'>Pending Contest</h1>
                     <p className='font-bold text-4xl text-yellow-500'>3</p>
                 </div>
 
