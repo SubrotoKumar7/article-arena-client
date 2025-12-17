@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../components/Shared/Logo/Logo';
 import { NavLink, Outlet } from 'react-router';
-import { FaBook, FaUserCog, FaUserFriends } from 'react-icons/fa';
+import { FaBook, FaUserCog, FaUserEdit, FaUserFriends } from 'react-icons/fa';
 import { IoHome, IoSettingsSharp, IoTrophySharp } from 'react-icons/io5';
 import { RiArticleFill, RiFileEditFill, RiSidebarFoldFill } from "react-icons/ri";
 import { MdNoteAlt } from 'react-icons/md';
@@ -115,7 +115,13 @@ const DashboardLayout = () => {
                                     </li>  
                                 </>
                             }
-                            
+
+                            <li>
+                                <NavLink to={'/dashboard/update-profile'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Update Profile">
+                                    <FaUserEdit className="my-1.5 inline-block size-4"></FaUserEdit> 
+                                    <span className="is-drawer-close:hidden">Update Profile</span>
+                                </NavLink>
+                            </li>
 
                             <li>
                                 <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">

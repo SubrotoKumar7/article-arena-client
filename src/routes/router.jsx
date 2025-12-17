@@ -21,6 +21,7 @@ import WinningContest from "../pages/Dashboard/User/WinningContest/WinningContes
 import AddContest from "../pages/Dashboard/Creator/AddContest/AddContest";
 import MyContest from "../pages/Dashboard/Creator/MyContest/MyContest";
 import AllParticipant from "../pages/Dashboard/Creator/AllParticipant/AllParticipant";
+import UpdateProfile from "../pages/Dashboard/UpdateProfile/UpdateProfile";
 
 
 const router = createBrowserRouter([
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
             {
                 index: true,
                 Component: DashboardHome
+            },
+            {
+                path: 'update-profile',
+                element: <UpdateProfile></UpdateProfile>
             },
             // admin only routes
             {
