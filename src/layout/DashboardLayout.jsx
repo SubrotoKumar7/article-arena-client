@@ -123,12 +123,6 @@ const DashboardLayout = () => {
                                 </NavLink>
                             </li>
 
-                            <li>
-                                <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">
-                                    <IoSettingsSharp className="my-1.5 inline-block size-4" />
-                                    <span className="is-drawer-close:hidden">Settings</span>
-                                </button>
-                            </li>
                         </ul>
                     </div>
                 </div>
