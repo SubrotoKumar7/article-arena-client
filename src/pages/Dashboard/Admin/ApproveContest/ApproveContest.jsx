@@ -2,12 +2,13 @@ import React, { useRef, useState } from 'react';
 import DashboardHeading from '../../../../components/Shared/DashboardHeading/DashboardHeading';
 import useAxiosSecured from '../../../../hooks/useAxiosSecured';
 import { useQuery } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 const ApproveContest = () => {
     const contestModalRef = useRef();
     const [selectedContest, setSelectedContest] = useState({});
     const axiosSecure = useAxiosSecured();
-    const {data: pendingContest = []} = useQuery({
+    const {data: pendingContest = [], refetch} = useQuery({
         queryKey: ['pending-contest'],
         queryFn: async()=> {
             const res = await axiosSecure.get('/pending-contest');
@@ -15,6 +16,28 @@ const ApproveContest = () => {
         }
     })
 
+    const handleContestApproval = (status, id) => {
+        const contestStatus = {status: status};
+        axiosSecure.patch(`/contest/${id}`, contestStatus)
+        .then((res)=> {
+            if(res.data.modifiedCount){
+                refetch();
+                if(status === 'approved'){
+                    toast.success(`Contest approved successfully`);
+                }
+                else{
+                    toast.error('Contest rejected successful');
+                }
+            }
+        })
+        .catch(err => {
+            toast.error(err.message);
+        })
+    }
+
+    const handleDelete = (id) => {
+        console.log('delete contest', id);
+    }
 
     const handleModal = (contest) => {
         contestModalRef.current.showModal();
@@ -61,9 +84,9 @@ const ApproveContest = () => {
                                 <td>{contest?.category}</td>
                                 <td><button onClick={()=> handleModal(contest)} className="btn btn-primary btn-xs">details</button></td>
                                 <td className='space-x-1'>
-                                    <button className="btn bg-green-500 btn-xs">Confirm</button>
-                                    <button className="btn btn-warning btn-xs">Reject</button>
-                                    <button className="btn bg-red-500 text-white btn-xs">Delete</button>
+                                    <button onClick={()=> handleContestApproval('approved', contest._id)} className="btn bg-green-500 btn-xs">Confirm</button>
+                                    <button onClick={()=> handleContestApproval('rejected', contest._id)} className="btn btn-warning btn-xs">Reject</button>
+                                    <button onClick={()=> handleDelete(contest._id)} className="btn bg-red-500 text-white btn-xs">Delete</button>
                                 </td>
                             </tr>)
                             }
