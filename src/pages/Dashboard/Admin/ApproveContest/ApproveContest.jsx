@@ -36,7 +36,13 @@ const ApproveContest = () => {
     }
 
     const handleDelete = (id) => {
-        console.log('delete contest', id);
+        axiosSecure.delete(`/contest/${id}`)
+        .then(()=> {
+            toast.success("Contest delete successful");
+        })
+        .catch(err => {
+            toast.error(err.message);
+        })
     }
 
     const handleModal = (contest) => {
