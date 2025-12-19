@@ -22,6 +22,8 @@ import AddContest from "../pages/Dashboard/Creator/AddContest/AddContest";
 import MyContest from "../pages/Dashboard/Creator/MyContest/MyContest";
 import AllParticipant from "../pages/Dashboard/Creator/AllParticipant/AllParticipant";
 import UpdateProfile from "../pages/Dashboard/UpdateProfile/UpdateProfile";
+import PaymentSuccess from "../pages/Payment/PaymentSuccess";
+import PaymentCancel from "../pages/Payment/PaymentCancel";
 
 
 const router = createBrowserRouter([
@@ -40,6 +42,14 @@ const router = createBrowserRouter([
             {
                 path: 'details/:id',
                 element: <PrivateRoute><Details></Details></PrivateRoute>
+            },
+            {
+                path: '/payment-success',
+                element: <PrivateRoute><PaymentSuccess></PaymentSuccess></PrivateRoute>
+            },
+            {
+                path: '/payment-cancel',
+                element: <PrivateRoute><PaymentCancel></PaymentCancel></PrivateRoute>
             }
         ]
     },

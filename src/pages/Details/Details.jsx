@@ -5,10 +5,12 @@ import useAxiosSecured from '../../hooks/useAxiosSecured';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 import Loader from '../../components/Loader/Loader';
+import useAuth from '../../hooks/useAuth';
 
 const Details = () => {
     const axiosSecure = useAxiosSecured();
     const { id } = useParams();
+    const {user} = useAuth();
 
     const [timeLeft, setTimeLeft] = useState("");
     const [isEnded, setIsEnded] = useState(false);
@@ -48,6 +50,21 @@ const Details = () => {
 
     if (isLoading) {
         return <Loader />;
+    }
+
+    const handlePayment = async() => {
+        const paymentInfo = {
+            contestName: contest.contestName,
+            contestImage: contest.image,
+            price: contest.price,
+            contestId: contest._id,
+            customerEmail: user.email,
+            description: contest.description
+        };
+
+        const res = await axiosSecure.post('/create-checkout-session', paymentInfo);
+
+        window.location.assign(res.data.url);
     }
 
     return (
@@ -121,7 +138,7 @@ const Details = () => {
                                 <span>{new Date(contest.createdAt).toDateString()}</span>
                             </div>
 
-                            <button disabled={isEnded} className={`btn w-full mt-4 ${isEnded ? 'btn-disabled' : 'btn-primary'}`}>Pay Now</button>
+                            <button onClick={handlePayment} disabled={isEnded} className={`btn w-full mt-4 ${isEnded ? 'btn-disabled' : 'btn-primary'}`}>Pay Now</button>
                         </div>
                     </div>
                 </div>
