@@ -80,7 +80,7 @@ const UserHome = () => {
                             <progress className='progress progress-success' max={100} value={20}></progress>
                             <p className='text-xs'>3 wins out of 12 contests</p>
                         </div>
-                        <button className='w-full btn btn-primary'>Edit Profile</button>
+                        <Link to={'/dashboard/update-profile'} className='w-full btn btn-primary'>Edit Profile</Link>
                     </div>
                 </div>
             </div>
