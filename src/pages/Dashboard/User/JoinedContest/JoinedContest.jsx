@@ -4,12 +4,17 @@ import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../../../hooks/useAuth';
 import useAxiosSecured from '../../../../hooks/useAxiosSecured';
 import Loader from '../../../../components/Loader/Loader';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 const JoinedContest = () => {
     const {user} = useAuth();
     const axiosSecure = useAxiosSecured();
+    const {register, handleSubmit, formState: {errors}, reset} = useForm();
     const modalRef = useRef();
-    const {data: myContest = [], isLoading} = useQuery({
+    const [selectedContest, setSelectedContest] = useState({});
+    const {data: myContest = [], isLoading, refetch} = useQuery({
         queryKey: ['joined-contest', user.email],
         queryFn: async() => {
             const res = await axiosSecure.get('my-joined-contest');
@@ -17,12 +22,37 @@ const JoinedContest = () => {
         }
     })
 
-    const handleModal = () => {
+    const handleModal = (contest) => {
+        setSelectedContest(contest);
         modalRef.current.showModal();
     }
 
     if(isLoading){
         return <Loader></Loader>
+    }
+
+
+    const handleSubmitTask = async(data) => {
+        const info = {
+            name: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            contestName: selectedContest.contestName,
+            contestId: selectedContest.contestId,
+            submittedContest: data.task,
+            isSubmit: "yes"
+        }
+
+        axiosSecure.post('/submit-contest', info)
+        .then(()=> {
+            toast.success("Contest submitted successful");
+            refetch();
+            reset();
+            modalRef.current.close();
+        })
+        .catch(err=> {
+            toast.error(err.message);
+        })
     }
 
 
@@ -58,7 +88,7 @@ const JoinedContest = () => {
                                         <td>Paid</td>
                                         <td>{new Date(contest.deadline).toDateString()}</td>
                                         <td>
-                                            <button onClick={handleModal} className='btn btn-sm btn-primary'>Submit</button>
+                                            <button onClick={()=> handleModal(contest)} className='btn btn-sm btn-primary'>Submit</button>
                                         </td>
                                     </tr>)
                                 }
@@ -76,10 +106,12 @@ const JoinedContest = () => {
                 <div className="modal-box">
                     <h3 className="font-bold text-lg">Submit Contest</h3>
                     <div>
-                        <form className='w-full p-2'>
+                        <form onSubmit={handleSubmit(handleSubmitTask)} className='w-full p-2'>
+                        {/* <form onSubmit={(e) => handleSubmit(handleSubmitTask)(e)} className='w-full p-2'> */}
                             <fieldset className="fieldset">
                                 <legend className="fieldset-legend">Your Contest</legend>
-                                <textarea className="textarea h-24 w-full" placeholder="write your contest here"></textarea>
+                                <textarea {...register('task', {required: true})} className="textarea h-24 w-full" placeholder="write your contest here"></textarea>
+                                {errors.task && <p className='text-red-500'>Please write this contest</p>}
                             </fieldset>
                             <div className='flex gap-2 mt-2'>
                                 <button type='submit' className='btn btn-primary'>Submit</button>

@@ -3,25 +3,44 @@ import Container from '../../components/Shared/Container/Container';
 import Winner from '../../components/Winner/Winner';
 import useAxiosSecured from '../../hooks/useAxiosSecured';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router';
 import Loader from '../../components/Loader/Loader';
 import useAuth from '../../hooks/useAuth';
+import { useParams } from 'react-router';
+import toast from 'react-hot-toast';
 
 const Details = () => {
     const axiosSecure = useAxiosSecured();
     const { id } = useParams();
-    const {user} = useAuth();
+    const { user, loading: authLoading } = useAuth();
 
     const [timeLeft, setTimeLeft] = useState("");
     const [isEnded, setIsEnded] = useState(false);
 
-    const { data: contest = {}, isLoading } = useQuery({
+    const { 
+        data: contest = {}, 
+        isLoading: contestLoading 
+    } = useQuery({
         queryKey: ['contest', id],
         queryFn: async () => {
             const res = await axiosSecure.get(`/contest/${id}`);
             return res.data;
         }
     });
+
+    const { 
+        data: joinedContests = [], 
+        isLoading: joinedLoading 
+    } = useQuery({
+        queryKey: ['my-joined-contest', user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get('/my-joined-contest');
+            return res.data;
+        }
+    });
+
+    const isAlreadyJoined = joinedContests.some(
+        joined => joined.contestId === id
+    );
 
     useEffect(() => {
         if (!contest?.deadline) return;
@@ -35,24 +54,26 @@ const Details = () => {
                 setIsEnded(true);
                 setTimeLeft("");
                 clearInterval(interval);
-            } else {
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                const minutes = Math.floor((diff / (1000 * 60)) % 60);
-                const seconds = Math.floor((diff / 1000) % 60);
-
-                setTimeLeft(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+                return;
             }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            setTimeLeft(`${days}d ${hours}h ${minutes}m ${seconds}s`);
         }, 1000);
 
         return () => clearInterval(interval);
     }, [contest?.deadline]);
 
-    if (isLoading) {
+
+    if (contestLoading || authLoading || joinedLoading) {
         return <Loader />;
     }
 
-    const handlePayment = async() => {
+    const handlePayment = async () => {
         const paymentInfo = {
             contestName: contest.contestName,
             contestImage: contest.image,
@@ -62,10 +83,23 @@ const Details = () => {
             description: contest.description
         };
 
-        const res = await axiosSecure.post('/create-checkout-session', paymentInfo);
+        try {
+            const res = await axiosSecure.post('/create-checkout-session', paymentInfo);
+            window.location.assign(res.data.url);
+        } catch (error) {
+            const errorMessage = error.response?.data?.error || "Payment failed. Please try again.";
+            toast.error(errorMessage);
+            console.error("Payment error:", error);
+        }
+    };
 
-        window.location.assign(res.data.url);
-    }
+    const isButtonDisabled = isEnded || isAlreadyJoined;
+
+    const buttonText = isEnded 
+        ? "Contest Ended" 
+        : isAlreadyJoined 
+            ? "Already Joined" 
+            : "Pay Now";
 
     return (
         <div className='py-10'>
@@ -92,7 +126,7 @@ const Details = () => {
 
                             <div className='mt-4'>
                                 <h1 className='mt-2 text-xl font-semibold'>How to Join</h1>
-                                <ol className='space-y-2'>
+                                <ol className='space-y-2 list-decimal list-inside'>
                                     <li><span className='font-semibold'>Pay the Contest Fee:</span> Pay first</li>
                                     <li><span className='font-semibold'>Complete Registration:</span> Get registered</li>
                                     <li><span className='font-semibold'>Submit Task:</span> After registration</li>
@@ -106,7 +140,7 @@ const Details = () => {
                             </div>
                         </div>
 
-                        <div className='space-y-2 p-5 rounded-xl'>
+                        <div className='space-y-2 p-5 rounded-xl bg-base-100 shadow-lg'>
                             <div className='flex justify-between text-lg'>
                                 <span className='font-semibold'>Prize Money:</span>
                                 <span className='text-primary'>${contest.prizeMoney}</span>
@@ -114,7 +148,7 @@ const Details = () => {
 
                             <div className='flex justify-between text-lg'>
                                 <span className='font-semibold'>Participant:</span>
-                                <span>{contest.participant}</span>
+                                <span>{contest.participant || 0}</span>
                             </div>
 
                             <div className='flex justify-between text-lg'>
@@ -124,9 +158,10 @@ const Details = () => {
 
                             <div className='flex items-center justify-between text-lg'>
                                 <span className='font-semibold'>Deadline:</span>
-                                <span className={`text-center font-medium ${isEnded ? 'text-red-500' : 'text-blue-600'}`}>{isEnded ? "Contest Ended" : `${timeLeft}`}</span>
+                                <span className={`text-center font-medium ${isEnded ? 'text-red-500' : 'text-blue-600'}`}>
+                                    {isEnded ? "Contest Ended" : timeLeft}
+                                </span>
                             </div>
-
 
                             <div className='flex justify-between text-lg'>
                                 <span className='font-semibold'>Contest Fee:</span>
@@ -138,15 +173,23 @@ const Details = () => {
                                 <span>{new Date(contest.createdAt).toDateString()}</span>
                             </div>
 
-                            <button onClick={handlePayment} disabled={isEnded} className={`btn w-full mt-4 ${isEnded ? 'btn-disabled' : 'btn-primary'}`}>Pay Now</button>
+                            <button
+                                onClick={handlePayment}
+                                disabled={isButtonDisabled}
+                                className={`btn w-full mt-6 text-lg font-medium ${
+                                    isButtonDisabled
+                                        ? 'btn-disabled cursor-not-allowed opacity-70'
+                                        : 'btn-primary hover:scale-105 transition-transform'
+                                }`}
+                            >
+                                {buttonText}
+                            </button>
                         </div>
                     </div>
                 </div>
 
                 <div className='mt-10'>
-                    {
-                        isEnded && <Winner />
-                    }
+                    {isEnded && <Winner />}
                 </div>
             </Container>
         </div>
