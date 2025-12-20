@@ -40,6 +40,7 @@ const JoinedContest = () => {
             contestName: selectedContest.contestName,
             contestId: selectedContest.contestId,
             submittedContest: data.task,
+            prizeMoney: selectedContest.prizeMoney,
             isSubmit: "yes"
         }
 
