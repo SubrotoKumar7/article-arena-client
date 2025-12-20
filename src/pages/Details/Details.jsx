@@ -85,7 +85,11 @@ const Details = () => {
 
         try {
             const res = await axiosSecure.post('/create-checkout-session', paymentInfo);
-            window.location.assign(res.data.url);
+            if(res.data.url){
+                window.location.assign(res.data.url);
+            }else{
+                toast.error(res.data.message);
+            }
         } catch (error) {
             const errorMessage = error.response?.data?.error || "Payment failed. Please try again.";
             toast.error(errorMessage);
