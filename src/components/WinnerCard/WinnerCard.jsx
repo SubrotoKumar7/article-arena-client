@@ -2,7 +2,7 @@ import React from 'react';
 import { BsCurrencyDollar } from 'react-icons/bs';
 
 const WinnerCard = ({latestWinner}) => {
-    const info = latestWinner;
+    const info = latestWinner[0];
 
     return (
         <div className='p-2 bg-white text-black shadow-2xl shadow-gray-600 rounded'>

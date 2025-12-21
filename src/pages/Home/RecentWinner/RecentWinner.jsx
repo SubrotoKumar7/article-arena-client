@@ -13,7 +13,7 @@ const RecentWinner = () => {
         queryKey: ['recentWinner'],
         queryFn: async() => {
             const res = await axiosSecure.get('/latest-winner');
-            return res.data[0];
+            return res.data;
         }
     });
 
@@ -24,7 +24,7 @@ const RecentWinner = () => {
                 <div className='grid grid-cols-1 md:grid-cols-3 md:gap-10 gap-5 pt-10'>
                     <TotalWinnerCard></TotalWinnerCard>
                     {
-                        latestWinner ?
+                        latestWinner.length > 0 ?
                         <WinnerCard latestWinner={latestWinner}></WinnerCard>
                         :
                         <div className='p-2 bg-linear-to-r from-blue-500 via-blue-700 to-blue-600 text-white shadow-2xl shadow-gray-600 rounded grid place-items-center'>
