@@ -54,51 +54,58 @@ const ApproveContest = () => {
         <div className='mb-20'>
             <DashboardHeading title={'Manage Contest'}></DashboardHeading>
             <div className='py-10'>
-                <div className="overflow-x-auto">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>SL</th>
-                                <th>Creator Info</th>
-                                <th>Contest Name</th>
-                                <th>Category</th>
-                                <th>View</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
+                {
+                    pendingContest.length > 0 ?
+                    <div className="overflow-x-auto">
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>SL</th>
+                                    <th>Creator Info</th>
+                                    <th>Contest Name</th>
+                                    <th>Category</th>
+                                    <th>View</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
 
-                        <tbody>
-                            {
-                                pendingContest.map((contest, index)=> <tr key={contest._id}>
-                                <td>{index + 1}</td>
-                                <td>
-                                    <div className="flex items-center gap-3">
-                                        <div className="avatar">
-                                            <div className="mask mask-squircle h-12 w-12">
-                                                <img
-                                                src={contest?.creatorPhoto}
-                                                alt="user profile image" />
+                            <tbody>
+                                {
+                                    pendingContest.map((contest, index)=> <tr key={contest._id}>
+                                    <td>{index + 1}</td>
+                                    <td>
+                                        <div className="flex items-center gap-3">
+                                            <div className="avatar">
+                                                <div className="mask mask-squircle h-12 w-12">
+                                                    <img
+                                                    src={contest?.creatorPhoto}
+                                                    alt="user profile image" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="font-bold">{contest?.creatorName}</div>
+                                                <p>{contest?.creatorEmail}</p>
                                             </div>
                                         </div>
-                                        <div>
-                                            <div className="font-bold">{contest?.creatorName}</div>
-                                            <p>{contest?.creatorEmail}</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>{contest?.contestName}</td>
-                                <td>{contest?.category}</td>
-                                <td><button onClick={()=> handleModal(contest)} className="btn btn-primary btn-xs">details</button></td>
-                                <td className='space-x-1'>
-                                    <button onClick={()=> handleContestApproval('approved', contest._id)} className="btn bg-green-500 btn-xs">Confirm</button>
-                                    <button onClick={()=> handleContestApproval('rejected', contest._id)} className="btn btn-warning btn-xs">Reject</button>
-                                    <button onClick={()=> handleDelete(contest._id)} className="btn bg-red-500 text-white btn-xs">Delete</button>
-                                </td>
-                            </tr>)
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                                    </td>
+                                    <td>{contest?.contestName}</td>
+                                    <td>{contest?.category}</td>
+                                    <td><button onClick={()=> handleModal(contest)} className="btn btn-primary btn-xs">details</button></td>
+                                    <td className='space-x-1'>
+                                        <button onClick={()=> handleContestApproval('approved', contest._id)} className="btn bg-green-500 btn-xs">Confirm</button>
+                                        <button onClick={()=> handleContestApproval('rejected', contest._id)} className="btn btn-warning btn-xs">Reject</button>
+                                        <button onClick={()=> handleDelete(contest._id)} className="btn bg-red-500 text-white btn-xs">Delete</button>
+                                    </td>
+                                </tr>)
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    :
+                    <div className='h-[70vh] flex items-center justify-center'>
+                        <h1 className='text-2xl font-semibold'>No pending contests.</h1>
+                    </div>
+                }
             </div>
 
             {/* modal */}
