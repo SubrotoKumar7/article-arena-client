@@ -16,6 +16,14 @@ const Details = () => {
     const [timeLeft, setTimeLeft] = useState("");
     const [isEnded, setIsEnded] = useState(false);
 
+    const {data: contestWinner = {}} = useQuery({
+        queryKey: ['winner', id],
+        queryFn: async()=> {
+            const res = await axiosSecure.get(`/contest-winner/${id}`);
+            return res.data;
+        }
+    })
+
     const { 
         data: contest = {}, 
         isLoading: contestLoading 
@@ -193,7 +201,7 @@ const Details = () => {
                 </div>
 
                 <div className='mt-10'>
-                    {isEnded && <Winner />}
+                    {contestWinner ? <Winner contestWinner={contestWinner} /> : isEnded && <h1 className='text-2xl font-bold text-center my-10'>There is no winner in this contest.</h1>}
                 </div>
             </Container>
         </div>
