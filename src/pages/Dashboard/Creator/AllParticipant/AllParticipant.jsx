@@ -2,14 +2,17 @@ import React, { useRef, useState } from 'react';
 import DashboardHeading from '../../../../components/Shared/DashboardHeading/DashboardHeading';
 import useAxiosSecured from '../../../../hooks/useAxiosSecured';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
+import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 const AllParticipant = () => {
     const modalRef = useRef();
     const axiosSecure = useAxiosSecured();
     const {id} = useParams();
     const [selectedContest, setSelectedContest] = useState([]);
-    const {data: contestParticipant = []} = useQuery({
+    const navigate = useNavigate();
+    const {data: contestParticipant = [], refetch} = useQuery({
         queryKey: ['contestAllParticipant', id],
         queryFn: async()=> {
             const res = await axiosSecure.get(`/submit-contest/${id}`);
@@ -21,6 +24,46 @@ const AllParticipant = () => {
     const handleModal = (contest) => {
         setSelectedContest(contest);
         modalRef.current.showModal();
+    }
+
+    const handleWinner = (info) => {
+        const winnerInfo = {
+            winnerName: info.name,
+            winnerEmail: info.email,
+            winnerPhoto: info.photoURL,
+            contestId: info.contestId,
+            contestName: info.contestName,
+            prizeMoney: info.prizeMoney
+        }
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want be declare winner him!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes"
+            }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.post('/declare-winner', winnerInfo)
+                .then((res)=> {
+                    if(res.data.insertedId){
+                        refetch();
+                        toast.success('Contest winner declare successful');
+                        navigate('/dashboard/declare-winner');
+                    };
+        
+                    if(res.data.message){
+                        toast.error(res.data.message);
+                    };
+                })
+                .catch(err=> {
+                    toast.error(err.message);
+                })
+            }
+            });
+
     }
 
 
@@ -63,7 +106,7 @@ const AllParticipant = () => {
                                         <td>{participant.email}</td>
                                         <td>{participant.contestName}</td>
                                         <td><button onClick={()=> handleModal(participant)} className="btn btn-secondary btn-xs">Show</button></td>
-                                        <td><button className="btn btn-primary btn-xs">Winner</button></td>
+                                        <td><button onClick={()=> handleWinner(participant)} className="btn btn-primary btn-xs">Winner</button></td>
                                     </tr>)
                                     }
                                 </tbody>
