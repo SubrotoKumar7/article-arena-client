@@ -108,8 +108,7 @@ const JoinedContest = () => {
                 <div className="modal-box">
                     <h3 className="font-bold text-lg">Submit Contest</h3>
                     <div>
-                        <form onSubmit={handleSubmit(handleSubmitTask)} className='w-full p-2'>
-                        {/* <form onSubmit={(e) => handleSubmit(handleSubmitTask)(e)} className='w-full p-2'> */}
+                        <form onSubmit={(e) => handleSubmit(handleSubmitTask)(e)} className='w-full p-2'>
                             <fieldset className="fieldset">
                                 <legend className="fieldset-legend">Your Contest</legend>
                                 <textarea {...register('task', {required: true})} className="textarea h-24 w-full" placeholder="write your contest here"></textarea>
