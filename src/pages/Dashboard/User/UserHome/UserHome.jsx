@@ -70,15 +70,18 @@ const UserHome = () => {
                             )
                             
                             :
-                            <div className='flex items-center justify-center'>
+                            <div className='flex h-50 items-center justify-center'>
                                 <h1 className='text-2xl font-semibold text-center'>You haven't joined any contests yet.</h1>
                             </div>
                         }
 
                     </div>
-                    <div className='mt-5'>
-                        <Link className='btn btn-primary' to={'/dashboard/joined-contest'}>View All</Link>
-                    </div>
+                    {
+                        myContest.length > 0 &&
+                        <div className='mt-5'>
+                            <Link className='btn btn-primary' to={'/dashboard/joined-contest'}>View All</Link>
+                        </div>
+                    }
                 </div>
                 <div className='col-span-1 order-1 md:order-2 h-fit w-full border border-gray-300 rounded shadow-2xl p-5'>
                     <h1 className='text-xl font-medium mb-2'>Profile Summary</h1>
