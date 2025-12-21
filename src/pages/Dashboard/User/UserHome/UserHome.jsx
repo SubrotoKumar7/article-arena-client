@@ -1,9 +1,25 @@
 import React from 'react';
 import useAuth from '../../../../hooks/useAuth';
 import { Link } from 'react-router';
+import useAxiosSecured from '../../../../hooks/useAxiosSecured';
+import { useQuery } from '@tanstack/react-query';
+import Loader from '../../../../components/Loader/Loader';
 
 const UserHome = () => {
     const {user} = useAuth();
+    const axiosSecure = useAxiosSecured();
+    const {data: myContest = [], isLoading} = useQuery({
+        queryKey: ['myJoinedContest', user?.email],
+        queryFn: async() => {
+            const res = await axiosSecure.get('my-joined-contest');
+            return res.data;
+        },
+        select: (data) => data.slice(0, 3)
+    })
+
+    if(isLoading){
+        return <Loader></Loader>
+    }
 
     return (
         <div className='mb-20'>
@@ -43,23 +59,22 @@ const UserHome = () => {
                 <div className='col-span-3 order-2 md:order-1'>
                     <h1 className='text-xl font-medium mb-2'>My Participant Contests</h1>
                     <div className='space-y-2'>
-                        <div className='py-5 my-2 shadow-2xl px-2 rounded hover:shadow duration-300'>
-                            <h1 className='text-xl font-medium mb-1'>Tech Article Contest</h1>
-                            <p className='text-gray-700'>Category: Technology</p>
-                            <p className='text-gray-500'>Deadline: 12 Dec 2025</p>
-                        </div>
+                        {
+                            myContest.length > 0 ?
+                            myContest.map(contest => 
+                                <div key={contest._id} className='py-5 my-2 shadow-2xl px-2 rounded hover:shadow duration-300'>
+                                    <h1 className='text-xl font-medium mb-1'>{contest.contestName}</h1>
+                                    <p className='text-gray-700'>Category: {contest.category}</p>
+                                    <p className='text-gray-500'>Deadline: {new Date().toDateString()}</p>
+                                </div>
+                            )
+                            
+                            :
+                            <div className='flex items-center justify-center'>
+                                <h1 className='text-2xl font-semibold text-center'>You haven't joined any contests yet.</h1>
+                            </div>
+                        }
 
-                        <div className='py-5 my-2 shadow-2xl px-2 rounded hover:shadow duration-300'>
-                            <h1 className='text-xl font-medium mb-1'>Tech Article Contest</h1>
-                            <p className='text-gray-700'>Category: Technology</p>
-                            <p className='text-gray-500'>Deadline: 12 Dec 2025</p>
-                        </div>
-                        
-                        <div className='py-5 my-2 shadow-2xl px-2 rounded hover:shadow duration-300'>
-                            <h1 className='text-xl font-medium mb-1'>Tech Article Contest</h1>
-                            <p className='text-gray-700'>Category: Technology</p>
-                            <p className='text-gray-500'>Deadline: 12 Dec 2025</p>
-                        </div>
                     </div>
                     <div className='mt-5'>
                         <Link className='btn btn-primary' to={'/dashboard/joined-contest'}>View All</Link>
