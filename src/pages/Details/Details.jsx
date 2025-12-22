@@ -113,6 +113,7 @@ const Details = () => {
             ? "Already Joined" 
             : "Pay Now";
 
+
     return (
         <div className='py-10'>
             <Container>
@@ -188,13 +189,13 @@ const Details = () => {
                             <button
                                 onClick={handlePayment}
                                 disabled={isButtonDisabled}
-                                className={`btn w-full mt-6 text-lg font-medium ${
+                                className={`btn w-full mt-6 text-lg font-medium ${contestWinner.length !== 0 && 'btn-disabled cursor-not-allowed opacity-70' }  ${
                                     isButtonDisabled
                                         ? 'btn-disabled cursor-not-allowed opacity-70'
                                         : 'btn-primary hover:scale-105 transition-transform'
                                 }`}
                             >
-                                {buttonText}
+                                {contestWinner.length !== 0 ? 'Contest End' : buttonText}
                             </button>
                         </div>
                     </div>
