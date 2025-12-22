@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router';
 import Logo from '../Shared/Logo/Logo';
-import Container from '../Shared/Container/Container';
 import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
+import Switch from '../Switch/Switch';
 
 const Navbar = () => {
     const {user, logoutUser} = useAuth();
@@ -19,6 +19,9 @@ const Navbar = () => {
                 <li><NavLink to={'/dashboard'}>Dashboard</NavLink></li>
             </>
         }
+        <li className='hover:bg-transparent'>
+            <Switch></Switch>
+        </li>
     </>
 
     const handleLogout = () => {
@@ -32,9 +35,8 @@ const Navbar = () => {
     }
 
     return (
-        <div className=" bg-white sticky z-50 top-0 shadow-sm">
-            <Container>
-                <div className="navbar my-1">
+        <div className="sticky z-50 top-0 shadow-sm">
+                <div className="bg-base-200 navbar my-1 px-[3%]">
                     <div className="navbar-start">
                         <div className="dropdown">
                             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -50,12 +52,14 @@ const Navbar = () => {
                             <Logo></Logo>
                         </div>
                     </div>
-                    <div className="navbar-end">
+                    <div className="navbar-center hidden lg:flex">
                         <div className="hidden lg:flex">
-                            <ul className="menu menu-horizontal px-1">
+                            <ul className="menu menu-horizontal items-center px-1">
                             {links}
                             </ul>
                         </div>
+                    </div>
+                    <div className="navbar-end">
                         {
                             user ?
                             <div className="dropdown dropdown-end p-2">
@@ -79,7 +83,6 @@ const Navbar = () => {
                         }
                     </div>
                 </div>
-            </Container>
         </div>
     );
 };

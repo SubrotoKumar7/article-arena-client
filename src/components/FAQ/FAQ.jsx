@@ -41,7 +41,7 @@ const FAQ = () => {
                         faqs.map((faq, index) => 
                         <div key={index} className="collapse collapse-plus bg-base-100 my-2 border border-base-300 duration-500">
                             <input type="radio" name="my-accordion-3" />
-                            <div className="collapse-title font-semibold bg-blue-100">{faq.question}</div>
+                            <div className="collapse-title font-semibold bg-primary text-white">{faq.question}</div>
                             <div className="collapse-content text-sm">{faq.answer}</div>
                         </div>
                         )
