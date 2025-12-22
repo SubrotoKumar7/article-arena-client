@@ -26,6 +26,7 @@ import PaymentSuccess from "../pages/Payment/PaymentSuccess";
 import PaymentCancel from "../pages/Payment/PaymentCancel";
 import LatestWinner from "../pages/LatestWinner/LatestWinner";
 import Leaderboard from "../pages/Leaderboard/Leaderboard";
+import MyProfile from "../pages/MyProfile/MyProfile";
 
 
 const router = createBrowserRouter([
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
             {
                 path: 'leaderboard',
                 Component: Leaderboard
+            },
+            {
+                path: 'my-profile',
+                element: <PrivateRoute><MyProfile></MyProfile></PrivateRoute>
             }
         ]
     },

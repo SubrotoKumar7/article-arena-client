@@ -16,6 +16,7 @@ const Navbar = () => {
             user &&
             <>
                 <li><NavLink to={'/latest-winner'}>Recent Winner</NavLink></li>
+                <li><NavLink to={'/my-profile'}>Profile</NavLink></li>
                 <li><NavLink to={'/dashboard'}>Dashboard</NavLink></li>
             </>
         }
