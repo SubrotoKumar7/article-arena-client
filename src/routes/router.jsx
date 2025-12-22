@@ -24,6 +24,7 @@ import AllParticipant from "../pages/Dashboard/Creator/AllParticipant/AllPartici
 import UpdateProfile from "../pages/Dashboard/UpdateProfile/UpdateProfile";
 import PaymentSuccess from "../pages/Payment/PaymentSuccess";
 import PaymentCancel from "../pages/Payment/PaymentCancel";
+import LatestWinner from "../pages/LatestWinner/LatestWinner";
 
 
 const router = createBrowserRouter([
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
             {
                 path: '/payment-cancel',
                 element: <PrivateRoute><PaymentCancel></PaymentCancel></PrivateRoute>
+            },
+            {
+                path: 'latest-winner',
+                element: <PrivateRoute><LatestWinner></LatestWinner></PrivateRoute>
             }
         ]
     },

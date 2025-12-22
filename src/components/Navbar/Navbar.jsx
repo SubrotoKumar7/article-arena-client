@@ -11,10 +11,12 @@ const Navbar = () => {
     const links = <>
         <li><NavLink to={'/'}>Home</NavLink></li>
         <li><NavLink to={'/all-contests'}>All Contests</NavLink></li>
-        <li><NavLink to={'/register'}>Register</NavLink></li>
         {
             user &&
-            <li><NavLink to={'/dashboard'}>Dashboard</NavLink></li>
+            <>
+                <li><NavLink to={'/latest-winner'}>Recent Winner</NavLink></li>
+                <li><NavLink to={'/dashboard'}>Dashboard</NavLink></li>
+            </>
         }
     </>
 
