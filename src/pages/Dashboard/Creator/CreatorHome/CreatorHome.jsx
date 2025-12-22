@@ -16,9 +16,19 @@ const CreatorHome = () => {
         }
     })
 
-    if(isLoading){
+    const {data: latestContest = [], isLoading: contestLoading} = useQuery({
+        queryKey: ['creatorLatestContest', user?.email],
+        queryFn: async() => {
+            const res = await axiosSecure.get('/my-contest');
+            return res.data;
+        },
+        select: (data) => data.slice(0, 3)
+    })
+
+    if(isLoading || contestLoading){
         return <Loader></Loader>;
     }
+
 
 
     return (
@@ -64,23 +74,22 @@ const CreatorHome = () => {
 
             <div className='space-y-2 my-10'>
                 <h1 className='text-2xl font-semibold mb-5'>Latest Contest</h1>
-                <div className='py-5 my-2 shadow-2xl px-2 rounded hover:shadow duration-300'>
-                    <h1 className='text-xl font-medium mb-1'>Tech Article Contest</h1>
-                    <p className='text-gray-700'>Category: Technology</p>
-                    <p className='text-gray-500'>Deadline: 12 Dec 2025</p>
-                </div>
+                {
+                    latestContest.length > 0 ?
 
-                <div className='py-5 my-2 shadow-2xl px-2 rounded hover:shadow duration-300'>
-                    <h1 className='text-xl font-medium mb-1'>Tech Article Contest</h1>
-                    <p className='text-gray-700'>Category: Technology</p>
-                    <p className='text-gray-500'>Deadline: 12 Dec 2025</p>
-                </div>
-                
-                <div className='py-5 my-2 shadow-2xl px-2 rounded hover:shadow duration-300'>
-                    <h1 className='text-xl font-medium mb-1'>Tech Article Contest</h1>
-                    <p className='text-gray-700'>Category: Technology</p>
-                    <p className='text-gray-500'>Deadline: 12 Dec 2025</p>
-                </div>
+                    latestContest.map(contest => <div key={contest._id} className='py-5 my-2 shadow-2xl px-2 rounded hover:shadow duration-300'>
+                            <h1 className='text-xl font-medium mb-1'>{contest.contestName}</h1>
+                            <p className='text-gray-700'>Category: {contest.category}</p>
+                            <p className='text-gray-500'>Deadline: {new Date(contest.deadline).toDateString()}</p>
+                        </div>
+                    )
+                    
+                    :
+                    <div className='py-20'>
+                        <h1 className='font-semibold text-2xl text-center'>No Latest Contest</h1>
+                    </div>
+                }
+
             </div>
         </div>
     );
