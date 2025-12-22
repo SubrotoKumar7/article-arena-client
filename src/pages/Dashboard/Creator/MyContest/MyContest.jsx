@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import DashboardHeading from '../../../../components/Shared/DashboardHeading/DashboardHeading';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../../../hooks/useAuth';
@@ -9,6 +9,8 @@ import toast from 'react-hot-toast';
 
 const MyContest = () => {
     const {user} = useAuth();
+    const modalRef = useRef();
+    const [selectedContest, setSelectedContest] = useState({});
     const axiosSecure = useAxiosSecured();
     const {data: myContest = [], refetch} = useQuery({
         queryKey: ["my-contest", user?.email],
@@ -48,6 +50,11 @@ const MyContest = () => {
         });
     }
 
+    const handleModal = (contest) => {
+        setSelectedContest(contest);
+        modalRef.current.showModal();
+    }
+
 
     return (
         <div>
@@ -79,7 +86,7 @@ const MyContest = () => {
                                                 <button onClick={()=> handleDeleteContest(contest._id)} className='btn bg-red-500 text-white btn-sm'>Delete</button>
                                             </>
                                             :
-                                            <button className='btn btn-primary btn-sm mr-1'>submission</button>
+                                            <button onClick={() => handleModal(contest)} className='btn btn-primary btn-sm mr-1'>submission</button>
                                         }
                                     </td>
                                 </tr>
@@ -89,6 +96,25 @@ const MyContest = () => {
                     </table>
                 </div>
             </div>
+            <dialog ref={modalRef} id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg">Contest Details</h3>
+                    <div className='py-5'>
+                        <img className='mb-4 w-full' src={selectedContest.image} alt="contest image" />
+                        <h1 className='text-2xl font-semibold'>{selectedContest.contestName}</h1>
+                        <p><span className='font-bold'>Category: </span>{selectedContest.category}</p>
+                        <p><span className='font-bold'>Entry Fee:</span> {selectedContest.price}</p>
+                        <p><span className='font-bold'>Prize Money:</span> {selectedContest.prizeMoney}</p>
+                        <p><span className='font-bold'>Contest Status:</span> {selectedContest.status}</p>
+                        <p><span className='font-bold'>Description:</span> {selectedContest.description}</p>
+                        </div>
+                    <div className="modal-action">
+                        <form method="dialog">
+                            <button className="btn">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
         </div>
     );
 };
