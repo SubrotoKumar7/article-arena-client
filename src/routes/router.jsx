@@ -25,6 +25,7 @@ import UpdateProfile from "../pages/Dashboard/UpdateProfile/UpdateProfile";
 import PaymentSuccess from "../pages/Payment/PaymentSuccess";
 import PaymentCancel from "../pages/Payment/PaymentCancel";
 import LatestWinner from "../pages/LatestWinner/LatestWinner";
+import Leaderboard from "../pages/Leaderboard/Leaderboard";
 
 
 const router = createBrowserRouter([
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
             {
                 path: 'latest-winner',
                 element: <PrivateRoute><LatestWinner></LatestWinner></PrivateRoute>
+            },
+            {
+                path: 'leaderboard',
+                Component: Leaderboard
             }
         ]
     },
