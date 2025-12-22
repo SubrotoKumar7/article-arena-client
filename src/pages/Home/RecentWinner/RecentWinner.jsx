@@ -6,6 +6,7 @@ import TotalWinnerCard from '../../../components/TotalWinnerCard/TotalWinnerCard
 import TotalPriceMoney from '../../../components/TotalPriceMoney/TotalPriceMoney';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecured from '../../../hooks/useAxiosSecured';
+import Loader from '../../../components/Loader/Loader';
 
 const RecentWinner = () => {
     const axiosSecure = useAxiosSecured();
@@ -17,12 +18,26 @@ const RecentWinner = () => {
         }
     });
 
+    const {data: winnerAndPrice = {}, isLoading} = useQuery({
+        queryKey: ['winnerAndPrice'],
+        queryFn: async() => {
+            const res = await axiosSecure.get('/winner-and-prize');
+            return res.data;
+        }
+    });
+
+    if(isLoading){
+        return <Loader></Loader>;
+    }
+
+    
+
     return (
         <div className='py-10'>
             <Container>
                 <Heading position={'text-center'} title={'Meet Our Recent Champions'} subtitle={'Celebrating the outstanding achievements of our winners. See who rose to the top and claimed the prize!'}></Heading>
                 <div className='grid grid-cols-1 md:grid-cols-3 md:gap-10 gap-5 pt-10'>
-                    <TotalWinnerCard></TotalWinnerCard>
+                    <TotalWinnerCard totalWinner={winnerAndPrice.totalWinner}></TotalWinnerCard>
                     {
                         latestWinner.length > 0 ?
                         <WinnerCard latestWinner={latestWinner}></WinnerCard>
@@ -31,7 +46,7 @@ const RecentWinner = () => {
                             <h1 className='text-3xl font-bold'>No Recent Winner</h1>
                         </div>
                     }
-                    <TotalPriceMoney></TotalPriceMoney>
+                    <TotalPriceMoney totalPrizeMoney={winnerAndPrice.totalPrizeMoney}></TotalPriceMoney>
                 </div>
             </Container>
         </div>
