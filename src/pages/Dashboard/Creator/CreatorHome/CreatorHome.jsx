@@ -1,9 +1,25 @@
 import React from 'react';
 import useAuth from '../../../../hooks/useAuth';
 import { Link } from 'react-router';
+import useAxiosSecured from '../../../../hooks/useAxiosSecured';
+import { useQuery } from '@tanstack/react-query';
+import Loader from '../../../../components/Loader/Loader';
 
 const CreatorHome = () => {
     const {user} = useAuth();
+    const axiosSecure = useAxiosSecured();
+    const {data: creatorHome = {}, isLoading} = useQuery({
+        queryKey: ['creator-dashboard', user?.email],
+        queryFn: async() => {
+            const res = await axiosSecure.get('/creator-dashboard');
+            return res.data;
+        }
+    })
+
+    if(isLoading){
+        return <Loader></Loader>;
+    }
+
 
     return (
         <div>
@@ -27,22 +43,22 @@ const CreatorHome = () => {
             <div className='grid grid-cols-1 md:grid-cols-4 gap-5 mt-10'>
                 <div className='shadow-2xl border border-gray-200 px-5 py-10 rounded-xl'>
                     <h1 className='font-semibold mb-4'>Total Contests</h1>
-                    <p className='font-bold text-4xl text-blue-700'>12</p>
+                    <p className='font-bold text-4xl text-blue-700'>{creatorHome.totalContest}</p>
                 </div>
 
                 <div className='shadow-2xl border border-gray-200 px-5 py-10 rounded-xl'>
                     <h1 className='font-semibold mb-4'>Pending Contest</h1>
-                    <p className='font-bold text-4xl text-yellow-500'>3</p>
+                    <p className='font-bold text-4xl text-yellow-500'>{creatorHome.pendingContest}</p>
                 </div>
 
                 <div className='shadow-2xl border border-gray-200 px-5 py-10 rounded-xl'>
                     <h1 className='font-semibold mb-4'>Rejected Contest</h1>
-                    <p className='font-bold text-4xl text-red-700'>2</p>
+                    <p className='font-bold text-4xl text-red-700'>{creatorHome.rejectedContest}</p>
                 </div>
 
                 <div className='shadow-2xl border border-gray-200 px-5 py-10 rounded-xl'>
                     <h1 className='font-semibold mb-4'>Active Contest</h1>
-                    <p className='font-bold text-4xl text-purple-500'> <span>7</span></p>
+                    <p className='font-bold text-4xl text-purple-500'> <span>{creatorHome.activeContest}</span></p>
                 </div>
             </div>
 
