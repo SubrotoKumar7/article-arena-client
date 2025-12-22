@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import useAxiosSecured from '../../../../hooks/useAxiosSecured';
 import { useQuery } from '@tanstack/react-query';
 import Loader from '../../../../components/Loader/Loader';
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'
 
 const UserHome = () => {
     const {user} = useAuth();
@@ -17,9 +18,26 @@ const UserHome = () => {
         select: (data) => data.slice(0, 3)
     })
 
-    if(isLoading){
+    const {data: userHome = {}, isLoading: homeLoading} = useQuery({
+        queryKey: ['user-dashboard', user?.email],
+        queryFn: async() => {
+            const res = await axiosSecure.get('/user-dashboard');
+            return res.data;
+        }
+    })
+
+    if(isLoading || homeLoading){
         return <Loader></Loader>
     }
+
+    const chartData = [
+        { name: "Win", value: userHome.totalWin },
+        { name: "Lose", value: userHome.totalParticipant - userHome.totalWin }
+    ];
+
+    const COLORS = ["#22c55e", "#ef4444"];
+
+
 
     return (
         <div className='mb-20'>
@@ -36,27 +54,28 @@ const UserHome = () => {
             <div className='grid grid-cols-1 md:grid-cols-4 gap-5'>
                 <div className='shadow-2xl border border-gray-200 px-5 py-10 rounded-xl'>
                     <h1 className='font-semibold mb-4'>Participant Contest</h1>
-                    <p className='font-bold text-4xl text-blue-700'>12</p>
+                    <p className='font-bold text-4xl text-blue-700'>{userHome.totalParticipant}</p>
                 </div>
 
                 <div className='shadow-2xl border border-gray-200 px-5 py-10 rounded-xl'>
                     <h1 className='font-semibold mb-4'>Total Wins</h1>
-                    <p className='font-bold text-4xl text-yellow-500'>🥇 3</p>
+                    <p className='font-bold text-4xl text-yellow-500'>🥇 {userHome.totalWin}</p>
                 </div>
 
                 <div className='shadow-2xl border border-gray-200 px-5 py-10 rounded-xl'>
                     <h1 className='font-semibold mb-4'>Total Prize Earned</h1>
-                    <p className='font-bold text-4xl text-green-700'>$500</p>
+                    <p className='font-bold text-4xl text-green-700'>$ {userHome.totalMoney}</p>
                 </div>
 
                 <div className='shadow-2xl border border-gray-200 px-5 py-10 rounded-xl'>
                     <h1 className='font-semibold mb-4'>Winning Percentage</h1>
-                    <p className='font-bold text-4xl text-purple-500'> <span>25%</span></p>
+                    <p className='font-bold text-4xl text-purple-500'> <span>{userHome.winningPercentage}%</span></p>
                 </div>
             </div>
 
             <div className='grid grid-cols-1 md:grid-cols-4 gap-10 mt-10'>
-                <div className='col-span-3 order-2 md:order-1'>
+
+                <div className='md:col-span-2 order-3 md:order-2'>
                     <h1 className='text-xl font-medium mb-2'>My Participant Contests</h1>
                     <div className='space-y-2'>
                         {
@@ -83,7 +102,32 @@ const UserHome = () => {
                         </div>
                     }
                 </div>
-                <div className='col-span-1 order-1 md:order-2 h-fit w-full border border-gray-300 rounded shadow-2xl p-5'>
+
+                <div className='md:col-span-1 w-full order-2 md:order-1 shadow-2xl border border-gray-300 rounded'>
+                    <div className="w-full h-[250px]">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <PieChart>
+                            <Pie
+                                data={chartData}
+                                dataKey="value"
+                                nameKey="name"
+                                cx="50%"
+                                cy="50%"
+                                outerRadius={80}
+                                label
+                            >
+                                {chartData.map((entry, index) => (
+                                <Cell key={index} fill={COLORS[index]} />
+                                ))}
+                            </Pie>
+                            <Tooltip></Tooltip>
+                            </PieChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+
+
+                <div className='md:col-span-1 order-1 md:order-3 h-fit w-full border border-gray-300 rounded shadow-2xl p-5'>
                     <h1 className='text-xl font-medium mb-2'>Profile Summary</h1>
                     <div>
                         <div className='flex gap-2 mb-5'>
@@ -95,8 +139,8 @@ const UserHome = () => {
                         </div>
                         <div className='mb-3'>
                             <p>Winning Percentage</p>
-                            <progress className='progress progress-success' max={100} value={20}></progress>
-                            <p className='text-xs'>3 wins out of 12 contests</p>
+                            <progress className='progress progress-success' max={100} value={userHome.winningPercentage}></progress>
+                            <p className='text-xs'>{userHome.totalWin} wins out of {userHome.totalParticipant} contests</p>
                         </div>
                         <Link to={'/dashboard/update-profile'} className='w-full btn btn-primary'>Edit Profile</Link>
                     </div>
