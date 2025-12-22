@@ -12,7 +12,7 @@ const Banner = () => {
 
                 <div className="relative flex justify-center">
                     <div className="join">
-                        <input className="input join-item text-black" placeholder="Search contest..." />
+                        <input className="input join-item bg-base-100 text-gray-400" placeholder="Search contest..." />
                         <button className="btn join-item btn-primary">Search</button>
                     </div>
                 </div>

@@ -53,7 +53,7 @@ const AddContest = () => {
         <div className='py-10'>
             <Container>
                 <div className='mb-20'>
-                    <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-2xl mt-10">
+                    <div className="max-w-3xl mx-auto bg-base-100 shadow-gray-400 p-8 rounded-lg shadow-2xl mt-10">
                         <h2 className="text-2xl text-center font-bold mb-6">Create New Contest</h2>
 
                         <form onSubmit={handleSubmit(handleAddContest)} className="space-y-5">
@@ -132,7 +132,7 @@ const AddContest = () => {
 
                                     <select
                                         {...register("category", { required: true })}
-                                        className="w-full mt-2 p-3 border border-gray-300 rounded bg-white focus:ring focus:ring-blue-300"
+                                        className="w-full mt-2 p-3 border border-gray-300 rounded bg-base-100 focus:ring focus:ring-blue-300"
                                     >
                                         <option value="">Select Category</option>
 

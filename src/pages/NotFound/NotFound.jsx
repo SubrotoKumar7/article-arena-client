@@ -8,7 +8,7 @@ const NotFound = () => {
     const navigate = useNavigate();
 
     return (
-        <div className='flex items-center justify-center h-screen'>
+        <div className='flex items-center justify-center h-screen bg-base-100'>
             <div className='text-center'>
                 <div className='w-fit mx-auto py-5'>
                     <IoWarningOutline className='text-red-500' size={45} />

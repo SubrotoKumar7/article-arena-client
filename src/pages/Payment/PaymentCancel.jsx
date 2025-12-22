@@ -7,7 +7,7 @@ const PaymentCancel = () => {
     const navigate = useNavigate();
     
     return (
-        <div className="min-h-[90vh] flex items-center justify-center bg-gray-50 py-10">
+        <div className="min-h-[90vh] flex items-center justify-center py-10">
             <Container>
                 <div className="bg-white shadow-lg rounded-xl p-8 text-center max-w-md mx-auto">
                     <FaTimesCircle className="w-16 h-16 mx-auto text-red-500 mb-4" />

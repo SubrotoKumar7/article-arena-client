@@ -26,8 +26,8 @@ const Login = () => {
 
     return (
         <div className='bg-base-300 min-h-screen grid place-items-center'>
-            <div className='md:w-[400px] w-fit bg-white rounded-xl p-7 shadow-2xl'>
-                <h1 className='text-black font-bold text-2xl text-center pb-3 pt-4'>Welcome Back!</h1>
+            <div className='md:w-[400px] w-fit bg-base-100 rounded-xl p-7 shadow-2xl'>
+                <h1 className='font-bold text-2xl text-center pb-3 pt-4'>Welcome Back!</h1>
                 <form onSubmit={handleSubmit(handleLogin)}>
                     <fieldset className="fieldset">
 

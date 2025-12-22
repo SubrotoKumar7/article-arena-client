@@ -42,16 +42,16 @@ const AllContest = () => {
 
                 <div className="flex justify-center items-center gap-2 mt-12 flex-wrap">
 
-                    <button onClick={() => setCurrentPage(p => p - 1)} disabled={currentPage === 1} className={`px-3 py-2 rounded border ${currentPage === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-white hover:bg-primary/90 hover:text-white'}`}>Prev</button>
+                    <button onClick={() => setCurrentPage(p => p - 1)} disabled={currentPage === 1} className={`px-3 py-2 rounded border ${currentPage === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-base-100 hover:bg-primary/90 hover:text-white'}`}>Prev</button>
 
                     {pages.map(page => (
-                        <button key={page} onClick={() => setCurrentPage(page)} className={`px-3 py-2 rounded border ${currentPage === page ? 'bg-primary text-white' : 'bg-white hover:bg-primary/90 hover:text-white'}`}>
+                        <button key={page} onClick={() => setCurrentPage(page)} className={`px-3 py-2 rounded border ${currentPage === page ? 'bg-primary text-white' : 'bg-base-100 hover:bg-primary/90 hover:text-white'}`}>
                             {page}
                         </button>
                     ))}
 
                     <button onClick={() => setCurrentPage(p => p + 1)} disabled={currentPage === totalPages}
-                        className={`px-3 py-2 rounded border ${currentPage === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-white hover:bg-primary/90 hover:text-white'}`}>Next</button>
+                        className={`px-3 py-2 rounded border ${currentPage === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-base-100 hover:bg-primary/90 hover:text-white'}`}>Next</button>
 
                 </div>
             </Container>

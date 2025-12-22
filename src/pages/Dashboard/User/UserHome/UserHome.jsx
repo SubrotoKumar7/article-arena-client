@@ -83,8 +83,8 @@ const UserHome = () => {
                             myContest.map(contest => 
                                 <div key={contest._id} className='py-5 my-2 shadow-2xl px-2 rounded hover:shadow duration-300'>
                                     <h1 className='text-xl font-medium mb-1'>{contest.contestName}</h1>
-                                    <p className='text-gray-700'>Category: {contest.category}</p>
-                                    <p className='text-gray-500'>Deadline: {new Date().toDateString()}</p>
+                                    <p>Category: {contest.category}</p>
+                                    <p>Deadline: {new Date().toDateString()}</p>
                                 </div>
                             )
                             

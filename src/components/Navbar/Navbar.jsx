@@ -36,7 +36,7 @@ const Navbar = () => {
 
     return (
         <div className="sticky z-50 top-0 shadow-sm">
-                <div className="bg-base-200 navbar my-1 px-[3%]">
+                <div className="bg-base-200 navbar pt-1 px-[3%]">
                     <div className="navbar-start">
                         <div className="dropdown">
                             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -72,7 +72,7 @@ const Navbar = () => {
                                 </div>
                                 <ul
                                     tabIndex="-1"
-                                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                                    className="menu menu-sm dropdown-content bg-base-100  rounded-box z-1 mt-3 w-52 p-2 shadow">
                                     <li className='text-center font-semibold'>{user?.displayName}</li>
                                     <li className='text-center'>{user?.email}</li>
                                     <li className='my-2'><button onClick={handleLogout} className='btn btn-primary btn-sm'>Logout</button></li>
