@@ -3,6 +3,7 @@ import DashboardHeading from '../../../../components/Shared/DashboardHeading/Das
 import useAxiosSecured from '../../../../hooks/useAxiosSecured';
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 const ApproveContest = () => {
     const contestModalRef = useRef();
@@ -36,13 +37,27 @@ const ApproveContest = () => {
     }
 
     const handleDelete = (id) => {
-        axiosSecure.delete(`/contest/${id}`)
-        .then(()=> {
-            toast.success("Contest delete successful");
-        })
-        .catch(err => {
-            toast.error(err.message);
-        })
+        Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+        if (result.isConfirmed) {
+            axiosSecure.delete(`/contest/${id}`)
+            .then(()=> {
+                refetch();
+                toast.success("Contest delete successful");
+            })
+            .catch(err => {
+                toast.error(err.message);
+            })
+            }
+        });
+
     }
 
     const handleModal = (contest) => {
