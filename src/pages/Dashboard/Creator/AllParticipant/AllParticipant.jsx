@@ -114,7 +114,7 @@ const AllParticipant = () => {
                         </div>
                     :
                     <div className='flex items-center justify-center h-[70vh]'>
-                        <h1 className='text-2xl font-semibold'>There are no participants in this contest.</h1>
+                        <h1 className='text-2xl font-semibold'>Participants have not yet submitted entries for this contest.</h1>
                     </div>
                 }
 

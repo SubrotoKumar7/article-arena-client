@@ -23,14 +23,14 @@ const DeclareWinner = () => {
 
     return (
         <div>
-            <DashboardHeading title={'My Approved Contest'}></DashboardHeading>
+            <DashboardHeading title={'Declare Contest Winner'}></DashboardHeading>
             <div className='mt-10 mb-20'>
                 {
                     myContest.length > 0 ?
                     myContest.map(contest => <ApprovedContestCard key={contest._id} contest={contest}></ApprovedContestCard>)
                     :
                     <div className='flex items-center justify-center h-[70vh]'>
-                        <h1 className='text-2xl font-semibold'>You have no approved contests.</h1>
+                        <h1 className='text-2xl font-semibold'>Your contest did not participate.</h1>
                     </div>
                 }                
 
